@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\FlightController;
+use App\Http\Controllers\Api\JwtAuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::apiResource('flights', \App\Http\Controllers\Api\FlightController::class)->where([
+Route::apiResource('flights', FlightController::class)->where([
     'flight' => '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
 ]);
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', [JwtAuthController::class, 'login']);
+    Route::post('logout', [JwtAuthController::class, 'logout']);
+    Route::post('refresh', [JwtAuthController::class, 'refresh']);
+    Route::post('me', [JwtAuthController::class, 'me']);
+});
