@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\FlightController;
+use App\Http\Controllers\Api\Gallery\AlbumController;
+use App\Http\Controllers\Api\Gallery\AlbumPictureController;
 use App\Http\Controllers\Api\JwtAuthController;
+use App\Http\RouteRegex;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +29,33 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Flight API resources
     Route::apiResource('flights', FlightController::class)->where([
-        'flight' => '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+        'flight' => RouteRegex::UUID
     ])->middleware('auth:api');
 
+    // Album API resources
+    Route::apiResource('gallery/albums', AlbumController::class)->where([
+        'album' => RouteRegex::UUID
+    ])->middleware('auth:api');
+
+    Route::group(['middleware' => 'auth:api', 'prefix' => 'gallery/albums'], function () {
+        Route::get('{album}/pictures', [AlbumPictureController::class, 'index'])->where([
+            'album' => RouteRegex::UUID
+        ]);
+
+        Route::post('{album}/pictures', [AlbumPictureController::class, 'store'])->where([
+            'album' => RouteRegex::UUID
+        ]);
+
+        Route::get('picture/{picture}', [AlbumPictureController::class, 'show'])->where([
+            'picture' => RouteRegex::UUID
+        ]);
+
+        Route::patch('picture/{picture}', [AlbumPictureController::class, 'update'])->where([
+            'picture' => RouteRegex::UUID
+        ]);
+
+        Route::delete('picture/{picture}', [AlbumPictureController::class, 'destroy'])->where([
+            'picture' => RouteRegex::UUID
+        ]);
+    });
 });
