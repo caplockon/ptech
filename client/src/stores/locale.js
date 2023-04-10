@@ -1,10 +1,9 @@
 import {defineStore} from "pinia";
 import {ref} from "vue";
 
-const initialLocale = localStorage.getItem('locale') || 'en';
-
 export const useLocaleStore = defineStore('locale', () => {
-    const locale = ref(initialLocale);
+
+    const locale = ref(localStorage.getItem('locale') || 'en');
 
     function setLocale(value) {
         localStorage.setItem('locale', locale.value = value)
@@ -14,5 +13,5 @@ export const useLocaleStore = defineStore('locale', () => {
         return locale.value;
     }
 
-    return {setLocale, getLocale};
+    return {locale, setLocale, getLocale};
 });

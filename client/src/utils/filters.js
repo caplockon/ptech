@@ -11,7 +11,7 @@ export function datetime(target, format = 'MMMM Do YYYY, h:mm:ss a') {
 export function eachProp(target, handle) {
     const result = {};
     for (let prop in target) {
-        result[prop] = handle(target[prop]);
+        result[prop] = handle(target[prop], prop);
     }
     return result;
 }
