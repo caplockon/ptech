@@ -18,5 +18,5 @@ const buttonClasses = computed(() => getClasses('InputButton', props))
 </script>
 
 <template>
-    <button @click="$emit('click', $event.target.value)" type="submit" :class="buttonClasses"><slot></slot></button>
+    <button @click="$emit('click', $event.target.value)" type="submit" :disabled="disabled" :class="buttonClasses"><slot></slot></button>
 </template>

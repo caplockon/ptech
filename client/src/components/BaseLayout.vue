@@ -11,13 +11,3 @@
     </footer>
     <slot name="ending"></slot>
 </template>
-
-<script>
-export default {
-    name: "BaseLayout"
-}
-</script>
-
-<style scoped>
-
-</style>
