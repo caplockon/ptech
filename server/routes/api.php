@@ -15,13 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('flights', FlightController::class)->where([
-    'flight' => '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-]);
-
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [JwtAuthController::class, 'login']);
     Route::post('logout', [JwtAuthController::class, 'logout']);
     Route::post('refresh', [JwtAuthController::class, 'refresh']);
     Route::post('me', [JwtAuthController::class, 'me']);
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+
+    // Flight API resources
+    Route::apiResource('flights', FlightController::class)->where([
+        'flight' => '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    ])->middleware('auth:api');
+
 });
