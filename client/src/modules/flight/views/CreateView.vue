@@ -11,10 +11,16 @@ const flight = ref({name: null, description: null}), errors = ref({name: null, d
 
 function createFlight() {
     validateForm(unref(flight)).then(validated => {
-        usePTechFlight.post(validated).then(createdFlight => {
+        usePTechFlight().post(validated).then(createdFlight => {
             useRouter().push({name: 'flight.edit', params: {uuid: createdFlight.uuid}})
-        }).catch(e => errors.value = e.getValidationErrors());
-    }).catch(e => errors.value = e);
+        }).catch(e => {
+            console.log(e)
+            errors.value = e.getValidationErrors()
+        });
+    }).catch(e => {
+        console.log(e)
+        errors.value = e
+    });
 
 }
 </script>
