@@ -2,6 +2,7 @@ import axios from "axios";
 import {useAuthStore} from "@/stores/auth";
 import auth from "@/services/ptech/auth";
 import flight from "@/services/ptech/flight";
+import gallery from "@/services/ptech/gallery";
 
 const http = axios.create({
     baseURL: import.meta.env.VITE_PTECH_BASE_URL,
@@ -25,3 +26,4 @@ http.interceptors.request.use((config) => {
 
 export const usePTechAuth = () => auth(http);
 export const usePTechFlight = () => flight(http);
+export const useGallery = () => gallery(http);
