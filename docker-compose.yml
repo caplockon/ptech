@@ -30,6 +30,7 @@ services:
       - MARIADB_USER=${DB_USER:-user}
       - MARIADB_PASSWORD=${DB_PASSWORD:-123456}
       - MARIADB_DATABASE=${DB_DATABASE:-noobie}
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-}
     volumes:
       - phuctech_data:/var/lib/mysql:delegated
       - ./.docker/mysql/db_conf.d:/etc/mysql/conf.d:cached
