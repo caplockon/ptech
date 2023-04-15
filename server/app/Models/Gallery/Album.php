@@ -33,4 +33,9 @@ class Album extends Model
     {
         return $this->hasMany(Picture::class, 'album_id', 'id');
     }
+
+    public function thumbnail()
+    {
+        return $this->hasOne(Picture::class, 'album_id', 'id')->latest();
+    }
 }

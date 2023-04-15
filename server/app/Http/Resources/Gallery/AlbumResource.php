@@ -10,6 +10,9 @@ class AlbumResource extends JsonResource
 {
     public function toArray(Request $request)
     {
+        $thumbnail = $this->thumbnail;
+        $thumbnail = $thumbnail ? $thumbnail->system_path : null;
+
         /** @var Album $this */
         return [
             'uuid' => $this->uuid,
@@ -17,6 +20,7 @@ class AlbumResource extends JsonResource
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'thumbnail' => $thumbnail
         ];
     }
 }
