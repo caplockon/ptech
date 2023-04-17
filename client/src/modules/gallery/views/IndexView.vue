@@ -3,11 +3,14 @@ import {computed, onMounted, ref} from "vue";
 import {useGallery} from "@/services/ptech";
 import {datetime, touchLog, cmpObj, createOnceAction} from "@/utils/filters";
 import moment from "moment";
+import ModalCreatePicture from "@/modules/gallery/partials/ModalCreatePicture.vue";
+import ModalUpdatePicture from "@/modules/gallery/partials/ModalUpdatePicture.vue";
 
 const albumList = ref([]);
 const pictureList = ref([]);
 const sortedBy = ref({field: 'created_at', type: 'desc'});
 const selectedAlbum = ref(null);
+const isCreatingNewPicture = ref(false)
 
 const selectAlbumAction = createOnceAction();
 
@@ -61,6 +64,81 @@ function selectAlbum(album) {
     })
 }
 
+/**
+ * Sub-module to handle picture's behavior
+ */
+const {
+    createNewPicture,
+    pictureCreateFieldErrors,
+    pictureCreateModalError,
+} = (function () {
+
+    const pictureCreateFieldErrors = ref({});
+    const pictureCreateModalError = ref('');
+
+    function createNewPicture(picture) {
+        pictureCreateModalError.value = '';
+
+        useGallery().album(selectedAlbum.value.uuid).createPicture(picture)
+            .then(res => {
+                pictureList.value.push(res)
+                isCreatingNewPicture.value = null
+            })
+            .catch(e => {
+                const validationErrors = touchLog(e.getValidationErrorForFields(['title', 'description', 'system_path']));
+                pictureCreateFieldErrors.value = validationErrors;
+                pictureCreateModalError.value = touchLog(e.takeGenericError(validationErrors));
+            })
+    }
+
+    return {
+        createNewPicture,
+        pictureCreateFieldErrors,
+        pictureCreateModalError,
+    };
+})();
+
+/**
+ * Sub-module to handle picture's behavior
+ */
+const {
+    selectPicture,
+    selectedPicture,
+    updatePicture,
+    pictureUpdateFieldErrors,
+    pictureUpdateModalError,
+} = (function () {
+
+    const pictureUpdateFieldErrors = ref({});
+    const pictureUpdateModalError = ref('');
+    const selectedPicture = ref(null);
+
+    function selectPicture(picture) {
+        touchLog(selectedPicture.value = picture);
+    }
+
+    function updatePicture(picture) {
+        pictureUpdateFieldErrors.value = '';
+        useGallery().picture(selectedPicture.value.uuid).update(picture)
+            .then(res => {
+                pictureList.value.push(res)
+            })
+            .catch(e => {
+                const validationErrors = touchLog(e.getValidationErrorForFields(['title', 'description', 'system_path']));
+                pictureUpdateFieldErrors.value = validationErrors;
+                pictureUpdateFieldErrors.value = touchLog(e.takeGenericError(validationErrors));
+            })
+    }
+
+    return {
+        selectPicture,
+        selectedPicture,
+        updatePicture,
+        pictureUpdateFieldErrors,
+        pictureUpdateModalError,
+    };
+})();
+
 </script>
 
 <template>
@@ -79,8 +157,8 @@ function selectAlbum(album) {
                 <li v-for="album in albumList">
                     <a @click="selectAlbum(album)" href="#"
                        class="flex items-center text-gray-900 p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                       :class="{'bg-gray-100 dark:bg-gray-700': isSelectedAlbum(album)}"
-                    >
+                       :class="{'bg-gray-100 dark:bg-gray-700': isSelectedAlbum(album)}">
+
                         <img :src="album.thumbnail" class="w-6 h-6 rounded"/>
                         <span class="ml-3">{{album.name}}</span>
                     </a>
@@ -97,6 +175,10 @@ function selectAlbum(album) {
 
     <div class="p-4 sm:ml-64">
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+
+            <div class="flex mt-2 items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
+                <a href="#" @click="isCreatingNewPicture = true" class="text-2xl text-gray-400 dark:text-gray-500">+</a>
+            </div>
 
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -122,7 +204,7 @@ function selectAlbum(album) {
                             <img :src="picture.system_path" class="w-12 h-12 rounded"/>
                         </th>
                         <td class="px-6 py-4">
-                            {{ picture.title }}
+                            <a href="#" @click.prevent="selectPicture(picture)">{{ picture.title }}</a>
                         </td>
                         <td class="px-6 py-4">
                             {{ formatPictureCreatedAt(picture.created_at) }}
@@ -134,10 +216,15 @@ function selectAlbum(album) {
                     </tbody>
                 </table>
             </div>
-
-            <div class="flex mt-2 items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                <a href="#" class="text-2xl text-gray-400 dark:text-gray-500">+</a>
-            </div>
         </div>
     </div>
+
+    <!-- Modal to create new picture -->
+    <modal-create-picture :shown="isCreatingNewPicture" :field-errors="pictureCreateFieldErrors" :modal-error="pictureCreateModalError"
+                          @close="isCreatingNewPicture = false"
+                          @create="createNewPicture"
+                          @error="(e) => pictureCreateFieldErrors = e"/>
+
+    <modal-update-picture :shown="!!selectedPicture" :original-pictures="selectedPicture"
+                          :field-errors="pictureUpdateFieldErrors"/>
 </template>

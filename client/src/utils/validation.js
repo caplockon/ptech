@@ -1,4 +1,7 @@
 import {unref} from "vue";
+import {eachProp} from "@/utils/filters";
+import {i18n} from "@/utils/modules";
+import * as yup from "yup";
 
 function getErrors(validationError, first = false) {
     var errors = {};
@@ -42,3 +45,9 @@ export const validate = function (schema, value) {
         });
     });
 };
+
+export const validateWithI18n = function (specs, value) {
+    return validate(yup.object(specs), value).then(validated => validated, e => {
+        throw eachProp(e, (v) => i18n.global.t(v));
+    });
+}

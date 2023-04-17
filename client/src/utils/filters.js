@@ -89,7 +89,7 @@ OnceAction.prototype.handle = function (job) {
 };
 
 export function createOnceAction(delay) {
-    const handler = new OnceAction(delay || 500);
+    const handler = new OnceAction(delay || 300);
     return (job) => handler.handle(job);
 }
 
