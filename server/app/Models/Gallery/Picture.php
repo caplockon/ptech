@@ -27,6 +27,7 @@ class Picture extends Model
 
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'system_path'
     ];
 }

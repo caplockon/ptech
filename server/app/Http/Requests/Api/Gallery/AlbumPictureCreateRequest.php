@@ -11,7 +11,7 @@ class AlbumPictureCreateRequest extends Request
         return [
             'title' => 'string',
             'description' => 'string',
-            'image' => 'required|array'
+            'system_path' => 'string'
         ];
     }
 }
