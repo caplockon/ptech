@@ -1,6 +1,9 @@
+<script setup>
+import BaseLayout from "@/components/BaseLayout.vue";
+</script>
 
 <template>
-  <main class="min-h-screen flex justify-center items-center w-full text-3xl">
-    Welcome to the application
-  </main>
+    <base-layout>
+        <h1 class="text-xl">Welcome</h1>
+    </base-layout>
 </template>

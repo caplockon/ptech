@@ -85,6 +85,26 @@ setup('InputButton')
         'dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
     ]);
 
+setup('InputFile')
+    .regularSize('border text-sm rounded-lg block w-full')
+    .regularState([
+        'text-gray-900 bg-gray-50 border-gray-300',
+        'focus:ring-blue-500 focus:border-blue-500',
+        'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white',
+        'dark:focus:ring-blue-500 dark:focus:border-blue-500',
+    ])
+    .errorState([
+        'bg-red-50 border-red-500 text-red-900 placeholder-red-700',
+        'focus:ring-red-500 focus:border-red-500',
+        'dark:bg-gray-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500'
+    ])
+    .disabledState([
+        'bg-gray-100 border border-gray-300 text-gray-900 cursor-not-allowed',
+        'focus:ring-blue-500 focus:border-blue-500',
+        'dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400',
+        'dark:focus:ring-blue-500 dark:focus:border-blue-500'
+    ]);
+
 
 export const determineState = function (disabled, error) {
     if (disabled) {

@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\FlightController;
 use App\Http\Controllers\Api\Gallery\AlbumController;
 use App\Http\Controllers\Api\Gallery\AlbumPictureController;
 use App\Http\Controllers\Api\JwtAuthController;
+use App\Http\Controllers\Api\SystemConfigController;
 use App\Http\RouteRegex;
 use Illuminate\Support\Facades\Route;
 
@@ -58,4 +60,8 @@ Route::group(['middleware' => 'auth:api'], function () {
             'picture' => RouteRegex::UUID
         ]);
     });
+
+    Route::post('/system-config', [SystemConfigController::class, 'fetchConfig']);
+    Route::post('/system-config/update', [SystemConfigController::class, 'updateConfig']);
+    Route::post('/upload/image', [FileUploadController::class, 'uploadImage']);
 });

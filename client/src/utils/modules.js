@@ -4,6 +4,7 @@ import modules from "@/modules";
 
 const localeSetup = {en: {}, vi: {}};
 const routerSetup = {routes: [], beforeEach: [], afterEach: []};
+const setups = [];
 
 /**
  * Install locale translator for module
@@ -47,10 +48,20 @@ for (let i = 0; i < modules.length; i++) {
     let module = modules[i];
     installLocale(module);
     installRouter(module);
+
+    if (module.hasOwnProperty('setup')) {
+        setups.push(module.setup);
+    }
 }
 
 export const i18n = createI18n(localeSetup);
 
 export const router = createRouter(routerSetup);
+
+export const setup = {
+    install: app => {
+        setups.map((s) => s(app));
+    }
+}
 
 export default {};
