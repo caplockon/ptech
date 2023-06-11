@@ -3,19 +3,19 @@ import vi from "./locale/vi";
 import en from "./locale/en";
 import {useMenuStore} from "@/stores/menu";
 import {shallowRef} from "vue";
-import IconPhoto from "@/components/icons/IconPhoto.vue";
+import IconSquaresPlus from "@/components/icons/IconSquaresPlus.vue";
 
 function setup() {
     useMenuStore().addTopLevelMenuItem({
-        key: 'gallery',
-        label: 'Gallery',
-        route: {name: 'gallery.index'},
-        icon: shallowRef(IconPhoto)
+        key: 'kanban',
+        label: 'Kanban',
+        route: {name: 'kanban.index'},
+        icon: shallowRef(IconSquaresPlus)
     })
 }
 
 export default {
-    name: 'gallery',
+    name: 'kanban',
     router: routes,
     locale: {en, vi},
     setup: setup

@@ -20,11 +20,10 @@ onMounted(() => {
     }
 });
 
-
 </script>
 <template>
     <li>
-        <button @click="showChildren = !showChildren" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+        <button @click="showChildren = !showChildren" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
             <component v-bind:is="props.icon" class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"></component>
             <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>{{props.label}}</span>
             <IconChevronDown v-if="!showChildren" class="w-6 h-6"/>

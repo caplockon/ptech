@@ -1,5 +1,6 @@
 <script setup>
-import {computed} from "vue";
+import {computed, ref} from "vue";
+import WrappedTable from "@/components/tables/WrappedTable.vue";
 
 const props = defineProps({
     columns: {
@@ -15,28 +16,34 @@ const props = defineProps({
 const columns = computed(function () {
     return props.columns.map(function (col, index) {
         if (typeof col === "string") {
-            return {
-                label: col
+            col = {
+                label: col,
             }
         }
 
+        col.classes = !!col.classes ? col.classes : "";
+
         return col;
     });
-})
+});
+
+const defaultColumnClasses = ref('p-4 text-sm text-gray-900 whitespace-nowrap dark:text-white');
 
 </script>
 <template>
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th v-for="col in columns" scope="col" class="px-6 py-3 w-16">{{col.label}}</th>
-        </tr>
+    <wrapped-table class="min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+        <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+                <th v-for="col in columns" scope="col" class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white" :class="col.classes">
+                    {{col.label}}
+                </th>
+            </tr>
         </thead>
 
         <tbody>
         <template v-for="row in data">
-            <slot :item="row"></slot>
+            <slot :item="row" :classes="defaultColumnClasses"></slot>
         </template>
         </tbody>
-    </table>
+    </wrapped-table>
 </template>

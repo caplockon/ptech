@@ -3,14 +3,14 @@ import vi from "./locale/vi";
 import en from "./locale/en";
 import {useMenuStore} from "@/stores/menu";
 import IconCog8Tooth from "@/components/icons/IconCog8Tooth.vue";
-import {markRaw, shallowRef} from "vue";
+import {shallowRef} from "vue";
 
 function setup()
 {
     useMenuStore().addTopLevelMenuItem({
         key: 'settings',
         label: 'Settings',
-        icon: markRaw(IconCog8Tooth)
+        icon: shallowRef(IconCog8Tooth)
     });
 
     useMenuStore().addChildLevelMenuItem('settings', {
