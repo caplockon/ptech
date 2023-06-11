@@ -1,10 +1,10 @@
 <script setup>
-import {computed, onMounted, ref, unref} from "vue";
+import {onMounted, ref, unref} from "vue";
 import {usePTechFlight} from "@/services/ptech";
 import {truncate, datetime} from "@/utils/filters";
 import {useRoute, useRouter} from "vue-router";
 import ConfirmDeleteModal from "@/components/modals/ConfirmDeleteModal.vue";
-import BaseLayout from "@/components/BaseLayout.vue";
+import DashboardLayout from "@/components/DashboardLayout.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -44,9 +44,7 @@ onMounted(() => {
 
 
 <template>
-
-    <base-layout>
-
+    <dashboard-layout>
         <div class="px-4 py-2">
             <h3 class="text-3xl font-bold dark:text-white mb-4">Flights</h3>
             <router-link :to="{name: 'flight.create'}">Create Flight</router-link>
@@ -157,7 +155,5 @@ onMounted(() => {
         <template v-slot:ending>
             <ConfirmDeleteModal :shown="isConfirmDeleteModalShown" @confirm="confirmToDeleteFlight" @cancel="isConfirmDeleteModalShown = false"/>
         </template>
-
-    </base-layout>
-
+    </dashboard-layout>
 </template>

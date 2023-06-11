@@ -5,6 +5,7 @@ import {datetime, touchLog, cmpObj, createOnceAction} from "@/utils/filters";
 import moment from "moment";
 import ModalCreatePicture from "@/modules/gallery/partials/ModalCreatePicture.vue";
 import ModalUpdatePicture from "@/modules/gallery/partials/ModalUpdatePicture.vue";
+import ModalDeletePicture from "@/modules/gallery/partials/ModalDeletePicture.vue";
 
 const albumList = ref([]);
 const pictureList = ref([]);
@@ -139,6 +140,10 @@ const {
     };
 })();
 
+const pictureToBeDeleted = ref(null);
+function deletePicture(picture) {
+    pictureToBeDeleted.value = picture;
+}
 </script>
 
 <template>
@@ -210,7 +215,7 @@ const {
                             {{ formatPictureCreatedAt(picture.created_at) }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline" @click="deletePicture(picture)">Delete</a>
                         </td>
                     </tr>
                     </tbody>
@@ -227,4 +232,8 @@ const {
 
     <modal-update-picture :shown="!!selectedPicture" :original-pictures="selectedPicture"
                           :field-errors="pictureUpdateFieldErrors"/>
+
+    <modal-delete-picture :shown="!!pictureToBeDeleted"
+                          @confirm="() => console.log('ye')"
+                          @close="pictureToBeDeleted = null"/>
 </template>

@@ -1,12 +1,11 @@
 <script setup>
-import BaseLayout from "@/components/BaseLayout.vue";
 import InputText from "@/components/inputs/InputText.vue";
 import InputTextarea from "@/components/inputs/InputTextarea.vue";
 import InputButton from "@/components/inputs/InputButton.vue";
 import {useSystemConfig, useUpload} from "@/services/ptech";
-import {computed, onMounted, ref} from "vue";
+import {onMounted, ref} from "vue";
 import InputImage from "@/components/inputs/InputImage.vue";
-import {touchLog} from "@/utils/filters";
+import DashboardLayout from "@/components/DashboardLayout.vue";
 
 const owner = ref({
     owner_name: null,
@@ -35,7 +34,7 @@ async function saveOwner() {
 </script>
 
 <template>
-    <base-layout>
+    <dashboard-layout>
         <div class="sm:mr-64">
 
             <h2 class="mb-4 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white">Setup Site Owner</h2>
@@ -53,5 +52,5 @@ async function saveOwner() {
 
             </div>
         </div>
-    </base-layout>
+    </dashboard-layout>
 </template>

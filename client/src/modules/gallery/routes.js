@@ -4,7 +4,7 @@ export default {
         {
             path: '/gallery',
             name: 'gallery.index',
-            component: () => import('./views/IndexView.vue'),
+            component: () => import('./views/gallery/Index.vue'),
             meta: {requiresAuth: true}
         }
     ],

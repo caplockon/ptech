@@ -1,9 +1,7 @@
 <script setup>
-import BaseLayout from "@/components/BaseLayout.vue";
+import DashboardLayout from "@/components/DashboardLayout.vue";
 </script>
 
 <template>
-    <base-layout>
-        <h1 class="text-xl">Welcome</h1>
-    </base-layout>
+    <dashboard-layout></dashboard-layout>
 </template>
