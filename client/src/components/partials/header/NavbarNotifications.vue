@@ -1,6 +1,6 @@
 <script setup>
 import IconBell from "@/components/icons/IconBell.vue";
-import {ref} from "vue";
+import {ref, shallowRef} from "vue";
 import IconCamera from "@/components/icons/IconCamera.vue";
 import IconHeart from "@/components/icons/IconHeart.vue";
 import IconChatBubbleOvalLeftEllipsis from "@/components/icons/IconChatBubbleOvalLeftEllipsis.vue";
@@ -9,25 +9,25 @@ import IconEye from "@/components/icons/IconEye.vue";
 const notifications = ref([
     {
         avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg',
-        type: IconCamera,
+        type: shallowRef(IconCamera),
         description: 'New message',
         time: 'a few moments ago'
     },
     {
         avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg',
-        type: IconHeart,
+        type: shallowRef(IconHeart),
         description: 'New message',
         time: 'a few moments ago'
     },
     {
         avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg',
-        type: IconChatBubbleOvalLeftEllipsis,
+        type: shallowRef(IconChatBubbleOvalLeftEllipsis),
         description: 'New message',
         time: 'a few moments ago'
     },
     {
         avatar: 'https://flowbite.com/docs/images/people/profile-picture-5.jpg',
-        type: IconCamera,
+        type: shallowRef(IconCamera),
         description: 'New message',
         time: 'a few moments ago'
     }

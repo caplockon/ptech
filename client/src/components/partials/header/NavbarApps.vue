@@ -1,7 +1,7 @@
 <script setup>
 import IconSquares2x2 from "@/components/icons/IconSquares2x2.vue";
 import IconShoppingBag from "@/components/icons/IconShoppingBag.vue";
-import {ref} from "vue";
+import {ref, shallowRef} from "vue";
 import IconUserCircle from "@/components/icons/IconUserCircle.vue";
 import IconInbox from "@/components/icons/IconInbox.vue";
 import IconUserGroup from "@/components/icons/IconUserGroup.vue";
@@ -13,39 +13,39 @@ import IconArrowLeftOnRectangle from "@/components/icons/IconArrowLeftOnRectangl
 
 const apps = ref([
     {
-        icon: IconShoppingBag,
+        icon: shallowRef(IconShoppingBag),
         label: "Sales"
     },
     {
-        icon: IconUserGroup,
+        icon: shallowRef(IconUserGroup),
         label: "Users"
     },
     {
-        icon: IconInbox,
+        icon: shallowRef(IconInbox),
         label: "Inbox"
     },
     {
-        icon: IconUserCircle,
+        icon: shallowRef(IconUserCircle),
         label: "Profile"
     },
     {
-        icon: IconCog8Tooth,
+        icon: shallowRef(IconCog8Tooth),
         label: "Settings"
     },
     {
-        icon: IconArchiveBox,
+        icon: shallowRef(IconArchiveBox),
         label: "Products"
     },
     {
-        icon: IconCurrencyDollar,
+        icon: shallowRef(IconCurrencyDollar),
         label: "Pricing"
     },
     {
-        icon: IconReceiptPercent,
+        icon: shallowRef(IconReceiptPercent),
         label: "Billing"
     },
     {
-        icon: IconArrowLeftOnRectangle,
+        icon: shallowRef(IconArrowLeftOnRectangle),
         label: "Logout"
     },
 ])

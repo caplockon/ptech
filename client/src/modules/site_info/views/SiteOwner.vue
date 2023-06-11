@@ -35,21 +35,30 @@ async function saveOwner() {
 
 <template>
     <dashboard-layout>
-        <div class="sm:mr-64">
+        <div class="px-4 pt-6">
+            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                <!-- Card header -->
+                <div class="items-center justify-between lg:flex">
+                    <div class="mb-4 lg:mb-0">
+                        <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">Setup Site Owner</h3>
+                        <span class="text-base font-normal text-gray-500 dark:text-gray-400">Let others know about the owner of the website</span>
+                    </div>
+                </div>
 
-            <h2 class="mb-4 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-2xl dark:text-white">Setup Site Owner</h2>
+                <div class="mt-5">
+                    <div>
+                        <input-text text-label="Owner Name" v-model="owner.owner_name"/>
 
-            <div>
-                <input-text text-label="Owner Name" v-model="owner.owner_name"/>
+                        <input-image text-label="Avatar" v-model="localAvatar" :link="owner.owner_avatar"/>
 
-                <input-image text-label="Avatar" v-model="localAvatar" :link="owner.owner_avatar"/>
+                        <input-text text-label="Job Title" v-model="owner.job_title"/>
 
-                <input-text text-label="Job Title" v-model="owner.job_title"/>
+                        <input-textarea text-label="Description" rows="7" v-model="owner.description"/>
 
-                <input-textarea text-label="Description" rows="7" v-model="owner.description"/>
+                        <input-button @click="saveOwner">Save</input-button>
 
-                <input-button @click="saveOwner">Save</input-button>
-
+                    </div>
+                </div>
             </div>
         </div>
     </dashboard-layout>

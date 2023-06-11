@@ -69,7 +69,7 @@ setup('InputText')
     ]);
 
 setup('InputLabel')
-    .regularSize('block mb-2 text-sm font-medium')
+    .regularSize('block mb-2 text-sm font-bold')
     .regularState('text-gray-900 dark:text-white')
     .errorState('text-red-700 dark:text-red-500');
 

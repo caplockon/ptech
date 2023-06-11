@@ -2,18 +2,20 @@ import routes from "./routes";
 import vi from "./locale/vi";
 import en from "./locale/en";
 import {useMenuStore} from "@/stores/menu";
+import IconCog8Tooth from "@/components/icons/IconCog8Tooth.vue";
+import {markRaw, shallowRef} from "vue";
 
 function setup()
 {
     useMenuStore().addTopLevelMenuItem({
         key: 'settings',
         label: 'Settings',
-        icon: () => import('./views/SiteOwner.vue')
+        icon: markRaw(IconCog8Tooth)
     });
 
     useMenuStore().addChildLevelMenuItem('settings', {
         label: 'Site Owner',
-        route: {name: 'settings.site_owner'}
+        route: {name: 'settings.site_owner'},
     });
 }
 
