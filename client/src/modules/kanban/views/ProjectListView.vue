@@ -11,6 +11,9 @@ import ModalCreateNewProject from "@/modules/kanban/partials/ModalCreateNewProje
 import BlockPlaceholderButton from "@/components/buttons/BlockPlaceholderButton.vue";
 import PrimaryButton from "@/components/buttons/PrimaryButton.vue";
 import ModalDeleteProject from "@/modules/kanban/partials/ModalDeleteProject.vue";
+import IconTrash from "@/components/icons/IconTrash.vue";
+import AlternativeButton from "@/components/buttons/AlternativeButton.vue";
+import IconPencilSquare from "@/components/icons/IconPencilSquare.vue";
 
 const projects = ref([]);
 const deleteProject = ref(null);
@@ -80,13 +83,15 @@ function projectDeleted(project) {
                                     {{datetime(item.created_at, 'll')}}
                                 </td>
                                 <td class="p-4 whitespace-nowrap text-right">
-                                    <button type="button" :data-dropdown-toggle="'projectAction' + item.uuid">
-                                        <icon-ellipsis-vertical class="w-4 h-4"/>
-                                    </button>
 
-                                    <div :id="'projectAction' + item.uuid" class="z-10 text-left hidden bg-white divide-y divide-gray-100 rounded-lg shadow-lg border w-44 dark:bg-gray-700">
-                                        <action-menu :item="item" @edit="editProject" @delete="() => deleteProject = item"/>
-                                    </div>
+                                    <primary-button :icon-only="true" :icon="IconPencilSquare"
+                                                    size="xs"
+                                                    class="mr-1"
+                                                    @click="() => {}"/>
+
+                                    <alternative-button :icon-only="true" :icon="IconTrash"
+                                                    size="xs"
+                                                    @click="() => deleteProject = item"/>
                                 </td>
                             </tr>
                         </template>

@@ -18,6 +18,10 @@ const props = defineProps({
         type: String,
         default: 'button'
     },
+    iconOnly: {
+        type: Boolean,
+        default: false
+    },
     icon: {}
 });
 
@@ -47,11 +51,11 @@ const roundedSizes = {
 };
 
 const iconSizes = {
-    'xs': 'w-3 h-3 mr-1',
-    'sm': 'w-4 h-4 mr-1',
-    'md': 'w-5 h-5 mr-1',
-    'lg': 'w-5 h-5 mr-1',
-    'xl': 'w-6 h-6 mr-1',
+    'xs': 'w-3 h-3',
+    'sm': 'w-4 h-4',
+    'md': 'w-5 h-5',
+    'lg': 'w-5 h-5',
+    'xl': 'w-6 h-6',
 };
 
 const schema = {
@@ -102,8 +106,9 @@ const classes = computed(() => {
     }
 
     if (!!props.icon) {
-        list.push('flex items-center');
-        list.push(plWithIcon[props.size] ?? plWithIcon.md);
+        list.push('inline-flex items-center');
+        !props.iconOnly && list.push(plWithIcon[props.size] ?? plWithIcon.md);
+        !props.iconOnly && list.push('ml-1');
     }
 
     return list.join(' ');
@@ -117,6 +122,6 @@ const iconSizeClasses = computed(() => {
     <button :type="props.type"
             :class="classes">
         <component v-bind:is="props.icon" :class="iconSizeClasses"></component>
-        <slot></slot>
+        <slot v-if="!props.iconOnly"></slot>
     </button>
 </template>
