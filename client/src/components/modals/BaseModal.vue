@@ -2,6 +2,7 @@
 import {computed, onMounted, ref, watch} from "vue";
 import IconXMark from "@/components/icons/IconXMark.vue";
 import AlternativeButton from "@/components/buttons/AlternativeButton.vue";
+import {getStateClasses, hideModal, showModal} from "@/utils/modal";
 
 const props = defineProps({
     shown: {
@@ -25,34 +26,16 @@ const props = defineProps({
 const shown = ref(props.shown);
 
 function show() {
-    shown.value = true;
-
-    if (document.getElementsByClassName('modal-backdrop-element').length > 0) {
-        return;
-    }
-
-    const backdrop = document.createElement('div');
-    'modal-backdrop-element bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40'.split(' ').map((className) => {
-        backdrop.classList.add(className);
-    });
-    document.body.append(backdrop);
+    showModal(() => shown.value = true);
 }
 
 function hide() {
-    const backdrop = document.getElementsByClassName('modal-backdrop-element');
-    if (backdrop.length > 0 && document.querySelectorAll('.modal-backdrop:not(.hidden)').length === 1) {
-        for (let i = 0; i < backdrop.length; i++) {
-            backdrop[i].remove();
-        }
-    }
-    shown.value = false;
+    hideModal(() => shown.value = false)
 }
 
 const modalClasses = computed(() => {
-    return shown.value
-        ? 'justify-center items-center flex'
-        : 'hidden';
-})
+    return getStateClasses(shown.value);
+});
 
 watch(props, () => {
     props.shown ? show() : hide();
@@ -69,7 +52,6 @@ function dismiss() {
 </script>
 
 <template>
-    <!-- Modal to Create new project -->
     <div :class="modalClasses" v-bind="$attrs" tabindex="-1" aria-hidden="true" class="modal-backdrop fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-2xl max-h-full">
             <!-- Modal content -->

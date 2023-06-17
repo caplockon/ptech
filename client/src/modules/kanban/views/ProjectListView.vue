@@ -1,17 +1,19 @@
 <script setup>
 import DashboardLayout from "@/components/DashboardLayout.vue";
 import IconPlus from "@/components/icons/IconPlus.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useKanban} from "@/services/ptech";
 import BasicTable from "@/components/tables/BasicTable.vue";
-import {datetime, truncate} from "@/utils/filters";
+import {datetime, touchLog, truncate} from "@/utils/filters";
 import IconEllipsisVertical from "@/components/icons/IconEllipsisVertical.vue";
 import ActionMenu from "@/components/partials/ActionMenu.vue";
 import ModalCreateNewProject from "@/modules/kanban/partials/ModalCreateNewProject.vue";
 import BlockPlaceholderButton from "@/components/buttons/BlockPlaceholderButton.vue";
 import PrimaryButton from "@/components/buttons/PrimaryButton.vue";
+import ModalDeleteProject from "@/modules/kanban/partials/ModalDeleteProject.vue";
 
 const projects = ref([]);
+const deleteProject = ref(null);
 const projectTableColumns = ref([
     'Code', 'Name', 'Owner', 'Created At', {label: 'Actions', classes: 'text-right'}
 ]);
@@ -25,13 +27,14 @@ function editProject(project) {
     console.log('editProject', project)
 }
 
-function deleteProject(project) {
-    console.log('deleteProject', project)
-}
-
 function projectCreated(project) {
     projects.value.push(project);
     showToCreateProject.value = false;
+}
+
+function projectDeleted(project) {
+    projects.value = projects.value.filter((p) => p.uuid !== project.uuid);
+    deleteProject.value = null;
 }
 
 </script>
@@ -59,6 +62,7 @@ function projectCreated(project) {
 
                 <!-- Card body -->
                 <div class="flex flex-col mt-6 min-w-full divide-y divide-gray-200 dark:divide-gray-600">
+
                     <basic-table :columns="projectTableColumns" :data="projects">
                         <template v-slot="{item, classes}">
                             <tr>
@@ -81,7 +85,7 @@ function projectCreated(project) {
                                     </button>
 
                                     <div :id="'projectAction' + item.uuid" class="z-10 text-left hidden bg-white divide-y divide-gray-100 rounded-lg shadow-lg border w-44 dark:bg-gray-700">
-                                        <action-menu :item="item" @edit="editProject" @delete="deleteProject"/>
+                                        <action-menu :item="item" @edit="editProject" @delete="() => deleteProject = item"/>
                                     </div>
                                 </td>
                             </tr>
@@ -103,6 +107,13 @@ function projectCreated(project) {
                 :shown="showToCreateProject"
                 @dismiss="showToCreateProject = !showToCreateProject"
                 id="createNewProjectModal"/>
+
+            <modal-delete-project
+                :shown="!!deleteProject"
+                :project="deleteProject"
+                @dismiss="deleteProject = null"
+                @project-deleted="projectDeleted"
+                />
         </template>
     </dashboard-layout>
 </template>
