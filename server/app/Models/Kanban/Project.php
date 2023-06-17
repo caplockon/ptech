@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Models\Kanban;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
@@ -18,6 +19,8 @@ use Illuminate\Support\Carbon;
  */
 class Project extends Model
 {
+    use SoftDeletes;
+
     /**
      * The name of table
      * @var string

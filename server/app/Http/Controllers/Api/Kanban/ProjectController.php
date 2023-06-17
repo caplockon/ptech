@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Kanban;
 
 use App\Http\Requests\Api\Kanban\CreateProjectRequest;
+use App\Http\Requests\Api\Request;
 use App\Http\Resources\Kanban\ProjectResource;
 use App\Models\Kanban\Project;
 use App\Models\User;
+use App\Repositories\Kanban\ProjectRepository;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -55,14 +57,17 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update()
+    public function update(Project $project)
     {
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy()
+    public function destroy(string $project, ProjectRepository $repository)
     {
+        $repository->delete($repository->getByUuidOrFail($project));
+        return response()->noContent();
     }
 }
