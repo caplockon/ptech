@@ -1,36 +1,7 @@
 <script setup>
-import {
-    initAccordions,
-    initCarousels,
-    initCollapses,
-    initDials,
-    initDismisses,
-    initDrawers,
-    initDropdowns,
-    initModals,
-    initPopovers,
-    initTabs,
-    initTooltips
-} from "flowbite";
-import {onMounted} from "vue";
 import DashboardNavbar from "@/components/partials/DashboardNavbar.vue";
 import DashboardSidebar from "@/components/partials/DashboardSidebar.vue";
 import DashboardFooter from "@/components/partials/DashboardFooter.vue";
-
-onMounted(() => {
-    initDropdowns();
-    initAccordions();
-    initCarousels();
-    initCollapses();
-    initDials();
-    initDismisses();
-    initDrawers();
-    initDropdowns();
-    initModals();
-    initPopovers();
-    initTabs();
-    initTooltips();
-})
 </script>
 
 <template>
@@ -48,7 +19,6 @@ onMounted(() => {
             </main>
 
             <dashboard-footer/>
-
         </div>
 
     </div>

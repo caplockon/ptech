@@ -1,7 +1,8 @@
 import moment from "moment"
 
 export function truncate(target, len, clamp = '...') {
-    return target.length > len ? target.slice(0, len) + clamp : target;
+    return target !== undefined && target !== null && target.length > len
+        ? target.slice(0, len) + clamp : target;
 }
 
 export function datetime(target, format = 'MMMM Do YYYY, h:mm:ss a') {

@@ -1,21 +1,24 @@
 <script setup>
 import DashboardLayout from "@/components/DashboardLayout.vue";
 import IconPlus from "@/components/icons/IconPlus.vue";
-import {onMounted, onUpdated, ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useKanban} from "@/services/ptech";
 import BasicTable from "@/components/tables/BasicTable.vue";
 import {datetime, truncate} from "@/utils/filters";
 import IconEllipsisVertical from "@/components/icons/IconEllipsisVertical.vue";
-import {initDropdowns} from "flowbite";
 import ActionMenu from "@/components/partials/ActionMenu.vue";
+import ModalCreateNewProject from "@/modules/kanban/partials/ModalCreateNewProject.vue";
+import BlockPlaceholderButton from "@/components/buttons/BlockPlaceholderButton.vue";
+import PrimaryButton from "@/components/buttons/PrimaryButton.vue";
 
 const projects = ref([]);
 const projectTableColumns = ref([
     'Code', 'Name', 'Owner', 'Created At', {label: 'Actions', classes: 'text-right'}
 ]);
+const showToCreateProject = ref(false);
 
 onMounted(() => {
-    useKanban().project.fetch().then(results => projects.value = results).then(() => initDropdowns());
+    useKanban().project.fetch().then(results => projects.value = results);
 })
 
 function editProject(project) {
@@ -25,6 +28,12 @@ function editProject(project) {
 function deleteProject(project) {
     console.log('deleteProject', project)
 }
+
+function projectCreated(project) {
+    projects.value.push(project);
+    showToCreateProject.value = false;
+}
+
 </script>
 
 <template>
@@ -38,6 +47,13 @@ function deleteProject(project) {
                         <span class="text-base font-normal text-gray-500 dark:text-gray-400">
                             {{projects.length === 0 ? $t('Kanban.ProjectListEmptyDesc') : $t('Kanban.ProjectListDesc')}}
                         </span>
+                    </div>
+
+                    <div>
+                        <primary-button
+                            :icon="IconPlus"
+                            @click.prevent="showToCreateProject = true"
+                            class="pl-3 flex items-center">Add</primary-button>
                     </div>
                 </div>
 
@@ -72,11 +88,21 @@ function deleteProject(project) {
                         </template>
                     </basic-table>
 
-                    <button class="flex w-full transition border-2 rounded border-dashed bg-gray-100 px-4 py-8 justify-center hover:bg-gray-200 hover:border-gray-300">
-                        <icon-plus class="w-8 h-8 text-gray-600"/>
-                    </button>
+                    <div class="mt-3" v-if="projects.length === 0">
+                        <block-placeholder-button @click.prevent="showToCreateProject = true">
+                            <icon-plus class="w-8 h-8 text-gray-600"/>
+                        </block-placeholder-button>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <template v-slot:ending>
+            <modal-create-new-project
+                @project-created="projectCreated"
+                :shown="showToCreateProject"
+                @dismiss="showToCreateProject = !showToCreateProject"
+                id="createNewProjectModal"/>
+        </template>
     </dashboard-layout>
 </template>
