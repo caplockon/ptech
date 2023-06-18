@@ -11,5 +11,10 @@ export default {
     "Kanban.CreateProject.ErrorEmptyName": "The name of project must be provided",
     "Kanban.CreateProject.ErrorEmptyDescription": "The description of project must be provided",
     "Kanban.ModalDeleteProject.ConfirmMessage": "Are you sure you want to delete this product - {code} - {name}?",
-    "Kanban.ModalDeleteProject.DeleteButtonLabel": "Delete"
+    "Kanban.ModalDeleteProject.DeleteButtonLabel": "Delete",
+    "Kanban.ModalEditProject.ModalTitle": "Edit Project {code} - {name}",
+    "Kanban.ModalEditProject.CodeLabel": "Code",
+    "Kanban.ModalEditProject.NameLabel": "Name",
+    "Kanban.ModalEditProject.DescLabel": "Description",
+    "Kanban.ModalEditProject.EditButtonLabel": "Save",
 }

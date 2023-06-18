@@ -13,6 +13,11 @@ export default function (http) {
             .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})
     };
 
+    project.update = function (uuid, data) {
+        return http.patch(`/api/kanban/projects/${uuid}`, data)
+            .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})
+    };
+
     project.detete = function (uuid) {
         return http.delete(`/api/kanban/projects/${uuid}`)
             .then(res => res.data.data, (e) => {throw error(e).getErrorMessage()})

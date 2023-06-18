@@ -2,6 +2,13 @@
 import DashboardNavbar from "@/components/partials/DashboardNavbar.vue";
 import DashboardSidebar from "@/components/partials/DashboardSidebar.vue";
 import DashboardFooter from "@/components/partials/DashboardFooter.vue";
+
+const props = defineProps({
+    footer: {
+        type: Boolean,
+        default: false
+    }
+})
 </script>
 
 <template>
@@ -18,7 +25,7 @@ import DashboardFooter from "@/components/partials/DashboardFooter.vue";
                 <slot></slot>
             </main>
 
-            <dashboard-footer/>
+            <dashboard-footer v-if="props.footer"/>
         </div>
 
     </div>

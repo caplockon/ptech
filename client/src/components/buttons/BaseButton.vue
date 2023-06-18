@@ -33,14 +33,27 @@ const sizes = {
     'xl': 'px-6 py-3.5 text-base font-medium',
 };
 
+const px = computed(() => {
+    let sizes = {
+        'xs': 'px-3',
+        'sm': 'px-3',
+        'md': 'px-3',
+        'lg': 'px-3',
+        'xl': 'px-3',
+    };
 
-const plWithIcon = {
-    'xs': 'pl-1',
-    'sm': 'px-1',
-    'md': 'px-3',
-    'lg': 'px-3',
-    'xl': 'px-4',
-};
+    if (!!props.icon) {
+        sizes = {
+            'xs': 'px-2',
+            'sm': 'px-2',
+            'md': 'px-4',
+            'lg': 'px-4',
+            'xl': 'px-5',
+        };
+    }
+
+    return sizes[props.size] ?? sizes.md;
+});
 
 const roundedSizes = {
     'xs': 'rounded-lg',
@@ -51,7 +64,7 @@ const roundedSizes = {
 };
 
 const iconSizes = {
-    'xs': 'w-3 h-3',
+    'xs': 'w-4 h-4',
     'sm': 'w-4 h-4',
     'md': 'w-5 h-5',
     'lg': 'w-5 h-5',
@@ -98,24 +111,26 @@ const schema = {
 
 const classes = computed(() => {
     const list = [];
+    list.push('inline-flex items-center');
     list.push(sizes[props.size] ?? sizes.md);
     list.push(schema[props.scheme] ?? schema.default);
+    list.push(px);
 
     if (props.rounded) {
         list.push(roundedSizes[props.size] ?? roundedSizes.md);
-    }
-
-    if (!!props.icon) {
-        list.push('inline-flex items-center');
-        !props.iconOnly && list.push(plWithIcon[props.size] ?? plWithIcon.md);
-        !props.iconOnly && list.push('ml-1');
     }
 
     return list.join(' ');
 });
 
 const iconSizeClasses = computed(() => {
-    return iconSizes[props.size] ?? iconSizes.md;
+    const list = [];
+    list.push(iconSizes[props.size] ?? iconSizes.md);
+    if (! props.iconOnly) {
+        list.push('mr-2')
+    }
+
+    return list.join(' ');
 })
 </script>
 <template>
