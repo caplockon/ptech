@@ -28,7 +28,7 @@ const props = defineProps({
 const sizes = {
     'xs': 'px-3 py-2 text-xs font-medium',
     'sm': 'px-3 py-2 text-sm font-medium',
-    'md': 'px-5 py-2.5 text-sm font-medium',
+    'md': 'px-5 py-2 text-sm font-medium',
     'lg': 'px-5 py-3 text-base font-medium',
     'xl': 'px-6 py-3.5 text-base font-medium',
 };
@@ -44,11 +44,11 @@ const px = computed(() => {
 
     if (!!props.icon) {
         sizes = {
-            'xs': 'px-2',
-            'sm': 'px-2',
-            'md': 'px-4',
-            'lg': 'px-4',
-            'xl': 'px-5',
+            'xs': 'px-1',
+            'sm': 'px-1',
+            'md': 'px-3',
+            'lg': 'px-3',
+            'xl': 'px-4',
         };
     }
 
