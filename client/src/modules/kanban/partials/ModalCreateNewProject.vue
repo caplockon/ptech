@@ -7,12 +7,7 @@ import {ref, unref} from "vue";
 import {validateForm} from "@/modules/kanban/validations/create_project";
 import {useKanban} from "@/services/ptech";
 
-const project = ref({
-    code: null,
-    name: null,
-    description: null
-});
-
+const project = ref({});
 const errors = ref({});
 
 const emit = defineEmits(['projectCreated']);
@@ -22,6 +17,7 @@ async function createProject() {
         const validated = await validateForm(unref(project));
         project.value = await useKanban().project.create(validated);
         emit("projectCreated", project.value);
+        project.value = {};
     }
     catch (e) {
         errors.value = e;
