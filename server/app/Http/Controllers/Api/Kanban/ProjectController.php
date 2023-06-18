@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Kanban;
 
 use App\Http\Requests\Api\Kanban\CreateProjectRequest;
-use App\Http\Requests\Api\Request;
+use App\Http\Requests\Api\Kanban\UpdateProjectRequest;
 use App\Http\Resources\Kanban\ProjectResource;
 use App\Models\Kanban\Project;
 use App\Models\User;
@@ -48,18 +48,14 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show()
-    {
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(Project $project)
+    public function update(string $project, ProjectRepository $repository, UpdateProjectRequest $request)
     {
-
+        $instance = $repository->getByUuidOrFail($project);
+        $instance->fill($request->validated());
+        $repository->persist($instance);
+        return response()->noContent();
     }
 
     /**
