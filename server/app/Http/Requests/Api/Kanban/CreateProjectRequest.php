@@ -24,6 +24,7 @@ class CreateProjectRequest extends Request
                 'required',
                 'string',
                 Rule::unique(table_of(Project::class))
+                    ->withoutTrashed()
                     ->where('code', $this->code)
                     ->where('owner_id', ensure_having($this->user())->id)
             ],

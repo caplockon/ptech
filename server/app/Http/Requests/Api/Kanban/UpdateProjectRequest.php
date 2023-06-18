@@ -21,6 +21,7 @@ class UpdateProjectRequest extends Request
             'code' => [
                 'string',
                 Rule::unique(table_of(Project::class))
+                    ->withoutTrashed()
                     ->where('code', $this->code)
                     ->where('owner_id', ensure_having($this->user())->id)
                     ->whereNot('uuid', $this->uuid)

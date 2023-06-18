@@ -22,7 +22,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->unique('uuid');
-            $table->unique(['code', 'owner_id']);
+            $table->index(['code', 'owner_id']);
             $table->index('owner_id');
         });
     }
