@@ -9,6 +9,7 @@ use App\Http\Resources\Kanban\ProjectResource;
 use App\Models\Kanban\Project;
 use App\Models\User;
 use App\Repositories\Kanban\ProjectRepository;
+use App\Services\Kanban\ProjectService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -29,7 +30,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateProjectRequest $request)
+    public function store(CreateProjectRequest $request, ProjectService $projectService)
     {
         $attrs = $request->validated();
 
@@ -40,6 +41,8 @@ class ProjectController extends Controller
         $project->updated_at = Carbon::now();
         $project->owner_id = ensure_having(auth()->user())->id;
         $project->save();
+
+        $projectService->createDefaultStatuses($project);
 
         return (new ProjectResource($project))->additional([
             'success' => true,
