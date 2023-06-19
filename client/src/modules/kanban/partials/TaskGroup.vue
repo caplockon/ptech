@@ -30,7 +30,7 @@ defineComponent(draggable)
                 v-model="tasks"
                 item-key="uuid">
                 <template #item="{element}">
-                    <task-card :task="element"/>
+                    <task-card class="task-card" :task="element"/>
                 </template>
             </draggable>
         </div>
@@ -42,3 +42,10 @@ defineComponent(draggable)
         </div>
     </div>
 </template>
+
+<style>
+.task-card[draggable="true"] {
+    opacity: .5;
+    transform: translateZ(100px) !important;
+}
+</style>
