@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Policies\Kanban;
+namespace Bundles\Kanban\Policies;
 
-use App\Models\Kanban\Project;
 use App\Models\User;
+use Bundles\Kanban\Models\Project;
 
 class ProjectPolicy
 {

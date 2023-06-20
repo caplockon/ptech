@@ -70,11 +70,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'kanban'], function () {
-    Route::apiResource('projects', ProjectController::class)->where([
-        'project' => RouteRegex::UUID
-    ]);
-
     Route::get('/projects/{project_uuid}/statuses', [StatusController::class, 'list'])->where([
         'project_uuid' => RouteRegex::UUID
     ]);
 });
+
+
+include __DIR__ . '/../bundles/Kanban/Routes/api.php';

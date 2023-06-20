@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\Kanban;
+namespace Bundles\Kanban\Services;
 
-use App\Models\Kanban\Project;
-use App\Models\Kanban\Status;
-use App\Repositories\Kanban\StatusRepository;
+use Bundles\Kanban\Models\Project;
+use Bundles\Kanban\Models\Status;
+use Bundles\Kanban\Repositories\StatusRepository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

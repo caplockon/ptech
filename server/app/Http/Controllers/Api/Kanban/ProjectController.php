@@ -3,13 +3,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Kanban;
 
-use App\Http\Requests\Api\Kanban\CreateProjectRequest;
-use App\Http\Requests\Api\Kanban\UpdateProjectRequest;
-use App\Http\Resources\Kanban\ProjectResource;
-use App\Models\Kanban\Project;
 use App\Models\User;
-use App\Repositories\Kanban\ProjectRepository;
-use App\Services\Kanban\ProjectService;
+use Bundles\Kanban\Http\Actions\CreateProject\CreateProjectRequest;
+use Bundles\Kanban\Http\Actions\UpdateRequest\UpdateProjectRequest;
+use Bundles\Kanban\Http\Resources\ProjectResource;
+use Bundles\Kanban\Models\Project;
+use Bundles\Kanban\Repositories\ProjectRepository;
+use Bundles\Kanban\Services\ProjectService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 

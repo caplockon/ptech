@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Kanban;
 
-use App\Http\Resources\Kanban\StatusResource;
-use App\Repositories\Kanban\ProjectRepository;
-use App\Repositories\Kanban\StatusRepository;
-use App\Services\Kanban\ProjectService;
+use Bundles\Kanban\Http\Resources\StatusResource;
+use Bundles\Kanban\Repositories\ProjectRepository;
+use Bundles\Kanban\Repositories\StatusRepository;
+use Bundles\Kanban\Services\ProjectService;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class StatusController extends Controller

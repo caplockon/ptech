@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Repositories\Kanban;
+namespace Bundles\Kanban\Repositories;
 
-use App\Models\Kanban\Project;
 use App\Repositories\Repository;
+use Bundles\Kanban\Models\Project;
 
 class ProjectRepository extends Repository
 {

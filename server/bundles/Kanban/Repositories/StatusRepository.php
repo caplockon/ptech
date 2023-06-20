@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Repositories\Kanban;
+namespace Bundles\Kanban\Repositories;
 
-use App\Models\Kanban\Status;
-use App\Repositories\Repository;
+use Bundles\Kanban\Models\Status;
 
 class StatusRepository extends Repository
 {

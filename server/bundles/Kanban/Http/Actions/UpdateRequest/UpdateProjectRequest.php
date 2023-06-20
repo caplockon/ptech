@@ -1,35 +1,32 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Api\Kanban;
+namespace Bundles\Kanban\Http\Actions\UpdateRequest;
 
 use App\Http\Requests\Api\Request;
-use App\Models\Kanban\Project;
+use Bundles\Kanban\Models\Project;
 use Illuminate\Validation\Rule;
 
 /**
+ * @property string $uuid
  * @property string $code
  * @property string $name
  * @property string|null $description
  */
-class CreateProjectRequest extends Request
+class UpdateProjectRequest extends Request
 {
-    /**
-     * @inheritdoc
-     */
     public function rules(): array
     {
         return [
             'code' => [
-                'required',
                 'string',
                 Rule::unique(table_of(Project::class))
                     ->withoutTrashed()
                     ->where('code', $this->code)
                     ->where('owner_id', ensure_having($this->user())->id)
+                    ->whereNot('uuid', $this->uuid)
             ],
             'name' => [
-                'required',
                 'string',
                 'min:5'
             ],

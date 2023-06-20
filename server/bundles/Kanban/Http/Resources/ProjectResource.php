@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Resources\Kanban;
+namespace Bundles\Kanban\Http\Resources;
 
-use App\Models\Kanban\Project;
+use Bundles\Kanban\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
