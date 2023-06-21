@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bundles\Kanban\Http\Actions\DeleteProject;
+namespace Bundles\Kanban\Http\Actions\Projects\Delete;
 
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Repositories\ProjectRepository;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bundles\Kanban\Http\Actions\CreateProject;
+namespace Bundles\Kanban\Http\Actions\Projects\Create;
 
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Http\Resources\ProjectResource;

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bundles\Kanban\Http\Actions\UpdateRequest;
+namespace Bundles\Kanban\Http\Actions\Projects\Update;
 
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Repositories\ProjectRepository;

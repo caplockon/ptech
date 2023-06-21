@@ -1,27 +1,27 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Kanban;
+namespace Bundles\Kanban\Http\Actions\Projects\Statuses;
 
+use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Http\Resources\StatusResource;
 use Bundles\Kanban\Repositories\ProjectRepository;
 use Bundles\Kanban\Repositories\StatusRepository;
 use Bundles\Kanban\Services\ProjectService;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class StatusController extends Controller
+class Action extends Controller
 {
     /**
      * @throws AuthorizationException
      */
-    public function list(
-        string $project_uuid,
+    public function __invoke(
+        string $uuid,
         ProjectRepository $projectRepository,
         StatusRepository $statusRepository,
         ProjectService $projectService
-    )
-    {
-        $project = $projectRepository->getByUuidOrFail($project_uuid);
+    ) {
+        $project = $projectRepository->getByUuidOrFail($uuid);
         $this->authorize('view', $project);
 
         $statuses = $statusRepository->getListByProjectID($project->id);

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bundles\Kanban\Http\Actions\ListProject;
+namespace Bundles\Kanban\Http\Actions\Projects\List;
 
 use App\Models\User;
 use Bundles\Kanban\Http\Controller;
