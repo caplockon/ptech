@@ -6,10 +6,11 @@ namespace Bundles\Kanban\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property string|null $uuid
- * @property string|null $status
- * @property int|null $priority
- * @property int|null $project_id
+ * @property-read   int|null $id
+ * @property        string|null $uuid
+ * @property        string|null $status
+ * @property        int|null $priority
+ * @property        int|null $project_id
  */
 class Status extends Model
 {

@@ -3,14 +3,18 @@ declare(strict_types=1);
 
 namespace Bundles\Kanban\Http\Actions\Projects\Delete;
 
-use Bundles\Kanban\Http\Controller;
+use Bundles\Kanban\Http\Actions\Projects\ProjectAction;
 use Bundles\Kanban\Repositories\ProjectRepository;
+use Illuminate\Auth\Access\AuthorizationException;
 
-class Action extends Controller
+class Action extends ProjectAction
 {
-    public function __invoke(string $project, ProjectRepository $repository)
+    /**
+     * @throws AuthorizationException
+     */
+    public function __invoke(ProjectRepository $repository)
     {
-        $repository->delete($repository->getByUuidOrFail($project));
+        $repository->delete($this->getProject());
         return response()->noContent();
     }
 }
