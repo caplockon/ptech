@@ -3,11 +3,16 @@ declare(strict_types=1);
 
 namespace Bundles\Kanban\Repositories;
 
+use Bundles\Kanban\Models\Project;
 use Bundles\Kanban\Models\Status;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class StatusRepository extends Repository
 {
+    /**
+     * @var string
+     */
     protected string $modelClass = Status::class;
 
     /**
@@ -49,5 +54,44 @@ class StatusRepository extends Repository
             ->where('project_id', $projectId)
             ->whereNotIn('id', (array) $id)
             ->delete();
+    }
+
+    /**
+     * Return statuses of a project
+     *
+     * @param Project $project
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection
+     */
+    public function getStatuses(Project $project)
+    {
+        $statuses = $this->getListByProjectID($project->id);
+
+        if ($statuses->isEmpty()) {
+            $statuses = $this->createDefaultStatuses($project);
+        }
+
+        return $statuses;
+    }
+
+
+    /**
+     * Create default statues for a project
+     *
+     * @param Project $project
+     * @return Collection
+     */
+    protected function createDefaultStatuses(Project $project)
+    {
+        $defaultStatues = $this->getDefaultListStatuses();
+        return $defaultStatues->map(function (Status $defaultStatus) use ($project) {
+
+            $status = new Status();
+            $status->fill($defaultStatus->toArray());
+            $status->uuid = Str::uuid();
+            $status->project_id = $project->id;
+            $status->save();
+
+            return $status;
+        });
     }
 }

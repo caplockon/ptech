@@ -6,13 +6,12 @@ namespace Bundles\Kanban\Http\Actions\Projects\Create;
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Http\Resources\ProjectResource;
 use Bundles\Kanban\Models\Project;
-use Bundles\Kanban\Services\ProjectService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class Action extends Controller
 {
-    public function __invoke(CreateProjectRequest $request, ProjectService $projectService)
+    public function __invoke(CreateProjectRequest $request)
     {
         $attrs = $request->validated();
 
@@ -23,8 +22,6 @@ class Action extends Controller
         $project->updated_at = Carbon::now();
         $project->owner_id = ensure_having(auth()->user())->id;
         $project->save();
-
-        $projectService->createDefaultStatuses($project);
 
         return (new ProjectResource($project))->additional([
             'success' => true,
