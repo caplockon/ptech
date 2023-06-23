@@ -12,6 +12,12 @@ export default {
             name: 'kanban.project.board',
             component: () => import('./views/ProjectKanboardView.vue'),
             meta: {requiresAuth: true}
+        },
+        {
+            path: '/kanban/project/edit/:uuid',
+            name: 'kanban.project.edit',
+            component: () => import('./views/ProjectEditView.vue'),
+            meta: {requiresAuth: true}
         }
     ],
 

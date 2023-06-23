@@ -13,6 +13,7 @@ import IconTrash from "@/components/icons/IconTrash.vue";
 import AlternativeButton from "@/components/buttons/AlternativeButton.vue";
 import IconPencilSquare from "@/components/icons/IconPencilSquare.vue";
 import ModalEditProject from "@/modules/kanban/partials/ModalEditProject.vue";
+import {useRouter} from "vue-router";
 
 const projects = ref([]);
 const deleteProject = ref(null);
@@ -21,6 +22,7 @@ const projectTableColumns = ref([
     'Code', 'Name', 'Owner', 'Created At', {label: 'Actions', classes: 'text-right'}
 ]);
 const showToCreateProject = ref(false);
+const router = useRouter();
 
 onMounted(() => {
     useKanban().project.fetch().then(results => projects.value = results);
@@ -114,7 +116,7 @@ function onProjectUpdated(updatedProject) {
                                     <primary-button :icon="IconPencilSquare"
                                                     size="xs"
                                                     class="mr-1"
-                                                    @click="() => projectToBeUpdated = item"
+                                                    @click="() => router.push({name: 'kanban.project.edit', params: {uuid: item.uuid}})"
                                     >Edit</primary-button>
 
                                     <alternative-button :icon="IconTrash"
