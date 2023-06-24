@@ -27,6 +27,8 @@ const statuses = ref([]);
 
 const order = (status1, status2) => status1.priority - status2.priority;
 
+const emit = defineEmits(['createStatus', 'deleteStatus', 'editStatus']);
+
 watch(props, () => {
     statuses.value = (props.statuses || [])
         .map(o => Object.assign({}, o))
@@ -79,7 +81,7 @@ async function saveStatuses() {
             <h3 class="mb-4 text-xl font-semibold dark:text-white">Statuses</h3>
 
             <div>
-                <primary-button size="xs"><icon-plus class="w-4 h-4"/> Add</primary-button>
+                <primary-button size="xs" @click="() => emit('createStatus')"><icon-plus class="w-4 h-4"/> Add</primary-button>
             </div>
         </div>
 
@@ -107,11 +109,11 @@ async function saveStatuses() {
                         <icon-arrow-down class="w-4 h-4"/>
                     </button>
 
-                    <button class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
+                    <button @click="() => emit('editStatus', status)" class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
                         <icon-pencil-square class="w-4 h-4"/>
                     </button>
 
-                    <button class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
+                    <button @click="() => emit('deleteStatus', status)" class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
                         <icon-trash class="w-4 h-4"/>
                     </button>
                 </div>

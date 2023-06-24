@@ -38,7 +38,24 @@ export default function (http) {
             .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})
     };
 
+    const status = {};
+
+    status.create = (data) => {
+        return http.post(`/api/kanban/statuses`, data)
+            .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})
+    };
+
+    status.update = (uuid, data) => {
+        return http.patch(`/api/kanban/statuses/${uuid}`, data)
+            .then(res => res.data, (e) => {throw error(e).getValidationErrors()})
+    };
+
+    status.delete = (uuid) => {
+        return http.delete(`/api/kanban/statuses/${uuid}`)
+            .then(res => res.data, (e) => {throw error(e).getErrorMessage()})
+    };
+
     return {
-        project
+        project, status
     };
 }
