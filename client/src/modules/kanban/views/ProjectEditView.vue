@@ -9,10 +9,11 @@ import ProjectStatusList from "@/modules/kanban/partials/ProjectStatusList.vue";
 import ProjectPriorityList from "@/modules/kanban/partials/ProjectPriorityList.vue";
 import {useToast} from "@/stores/toast";
 import ModalCreateStatus from "@/modules/kanban/partials/statuses/ModalCreateStatus.vue";
-import PopupModal from "@/components/modals/PopupModal.vue";
-import IconExclamationCircle from "@/components/icons/IconExclamationCircle.vue";
 import ModalDeleteStatus from "@/modules/kanban/partials/statuses/ModalDeleteStatus.vue";
 import ModalUpdateStatus from "@/modules/kanban/partials/statuses/ModalUpdateStatus.vue";
+import ModalCreatePriority from "@/modules/kanban/partials/priorities/ModalCreatePriority.vue";
+import ModalDeletePriority from "@/modules/kanban/partials/priorities/ModalDeletePriority.vue";
+import ModalUpdatePriority from "@/modules/kanban/partials/priorities/ModalUpdatePriority.vue";
 
 const route = useRoute();
 const project = ref({});
@@ -53,6 +54,29 @@ function onStatusUpdated(updated) {
     toast.pushSuccess(`Status '${updated.status}' has been updated successfully`);
 }
 
+const creatingNewPriority = ref(false);
+function onPriorityCreated(created) {
+    creatingNewPriority.value = false;
+    project.value.priorities.push(created);
+    toast.pushSuccess(`Priority '${created.name}' was created successfully`);
+}
+
+const priorityToBeDeleted = ref(null);
+function onPriorityDeleted(deleted) {
+    priorityToBeDeleted.value = null;
+    project.value.priorities = project.value.priorities.filter(o => o.uuid !== deleted.uuid);
+    toast.pushSuccess(`Priority '${deleted.name}' was deleted successfully`);
+}
+
+const priorityToBeUpdated = ref(null);
+function onPriorityUpdated(updated) {
+    priorityToBeUpdated.value = null;
+    const pos = project.value.priorities.findIndex(o => o.uuid === updated.uuid);
+    if (pos >= 0) {
+        Object.assign(project.value.priorities[pos], updated);
+    }
+    toast.pushSuccess(`Priority '${updated.name}' was updated successfully`);
+}
 </script>
 <template>
     <dashboard-layout>
@@ -82,6 +106,9 @@ function onStatusUpdated(updated) {
                 <project-priority-list
                     :project="project"
                     :priorities="project.priorities ?? []"
+                    @create-priority="creatingNewPriority = true"
+                    @delete-priority="(o) => priorityToBeDeleted = o"
+                    @edit-priority="(o) => priorityToBeUpdated = o"
                 />
 
             </div>
@@ -107,6 +134,27 @@ function onStatusUpdated(updated) {
                 :status="statusToBeUpdated"
                 @dismiss="statusToBeUpdated = null"
                 @status-updated="onStatusUpdated"
+            />
+
+            <modal-create-priority
+                :shown="creatingNewPriority"
+                :project="project"
+                @dismiss="creatingNewPriority = false"
+                @priority-created="onPriorityCreated"
+            />
+
+            <modal-delete-priority
+                :shown="!!priorityToBeDeleted"
+                :priority="priorityToBeDeleted"
+                @dismiss="priorityToBeDeleted = null"
+                @priority-deleted="onPriorityDeleted"
+            />
+
+            <modal-update-priority
+                :shown="!!priorityToBeUpdated"
+                :priority="priorityToBeUpdated"
+                @dismiss="priorityToBeUpdated = null"
+                @priority-updated="onPriorityUpdated"
             />
         </template>
     </dashboard-layout>

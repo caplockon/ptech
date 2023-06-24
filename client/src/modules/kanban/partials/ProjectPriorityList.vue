@@ -26,6 +26,8 @@ const props = defineProps({
 const priorities = ref([]);
 const order = (priority1, priority2) => priority1.order - priority2.order;
 
+const emit = defineEmits(['createPriority', 'deletePriority', 'editPriority']);
+
 watch(props, () => {
     priorities.value = (props.priorities ?? [])
         .map(o => Object.assign({}, o))
@@ -79,7 +81,7 @@ async function savePriorities() {
             <h3 class="mb-4 text-xl font-semibold dark:text-white">Statuses</h3>
 
             <div>
-                <primary-button size="xs"><icon-plus class="w-4 h-4"/> Add</primary-button>
+                <primary-button size="xs" @click="emit('createPriority')"><icon-plus class="w-4 h-4"/> Add</primary-button>
             </div>
         </div>
 
@@ -107,11 +109,11 @@ async function savePriorities() {
                         <icon-arrow-down class="w-4 h-4"/>
                     </button>
 
-                    <button class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
+                    <button @click="emit('editPriority', priority)" class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
                         <icon-pencil-square class="w-4 h-4"/>
                     </button>
 
-                    <button class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
+                    <button @click="emit('deletePriority', priority)" class="w-5 h-5 hover:bg-gray-300 inline-flex items-center justify-center rounded">
                         <icon-trash class="w-4 h-4"/>
                     </button>
                 </div>

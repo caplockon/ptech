@@ -55,7 +55,24 @@ export default function (http) {
             .then(res => res.data, (e) => {throw error(e).getErrorMessage()})
     };
 
+    const priority = {};
+
+    priority.create = (data) => {
+        return http.post(`/api/kanban/priorities`, data)
+            .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})
+    };
+
+    priority.update = (uuid, data) => {
+        return http.patch(`/api/kanban/priorities/${uuid}`, data)
+            .then(res => res.data, (e) => {throw error(e).getValidationErrors()})
+    };
+
+    priority.delete = (uuid) => {
+        return http.delete(`/api/kanban/priorities/${uuid}`)
+            .then(res => res.data, (e) => {throw error(e).getErrorMessage()})
+    };
+
     return {
-        project, status
+        project, status, priority
     };
 }

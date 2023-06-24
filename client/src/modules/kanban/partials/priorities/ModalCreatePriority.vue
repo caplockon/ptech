@@ -1,9 +1,10 @@
+
 <script setup>
 import BaseModal from "@/components/modals/BaseModal.vue";
 import InputText from "@/components/inputs/InputText.vue";
 import PrimaryButton from "@/components/buttons/PrimaryButton.vue";
 import {ref} from "vue";
-import {validateForm} from "@/modules/kanban/validations/status";
+import {validateForm} from "@/modules/kanban/validations/priority";
 import {useKanban} from "@/services/ptech";
 
 const props = defineProps({
@@ -13,18 +14,19 @@ const props = defineProps({
     }
 });
 
-const status = ref({});
+const priority = ref({});
 const errors = ref({});
 
-const emit = defineEmits(['statusCreated']);
+const emit = defineEmits(['priorityCreated']);
 
-async function createStatus() {
+async function createPriority() {
     try {
-        const validated = await validateForm(status.value);
+        const validated = await validateForm(priority.value);
         validated.project_uuid = props.project.uuid;
-        const created = await useKanban().status.create(validated);
-        emit("statusCreated", created);
-        status.value = {};
+        console.log(validated)
+        const created = await useKanban().priority.create(validated);
+        emit("priorityCreated", created);
+        priority.value = {};
     } catch (e) {
         errors.value = e;
     }
@@ -33,19 +35,19 @@ async function createStatus() {
 </script>
 <template>
     <base-modal>
-        <template v-slot:header>New Status</template>
+        <template v-slot:header>New Priority</template>
 
         <template v-slot:default>
 
-            <input-text v-model="status.status"
-                        text-label="Status"
-                        :error="errors.status"
+            <input-text v-model="priority.name"
+                        text-label="Name"
+                        :error="errors.name"
             />
 
         </template>
 
         <template v-slot:footer>
-            <primary-button @click="createStatus">Create</primary-button>
+            <primary-button @click="createPriority">Create</primary-button>
         </template>
 
     </base-modal>

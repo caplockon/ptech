@@ -36,7 +36,7 @@ async function updateStatus() {
 </script>
 <template>
     <base-modal>
-        <template v-slot:header>New Status</template>
+        <template v-slot:header>Edit Status</template>
 
         <template v-slot:default>
 

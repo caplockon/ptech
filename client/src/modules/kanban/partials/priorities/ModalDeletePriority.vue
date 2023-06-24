@@ -7,18 +7,18 @@ import {useKanban} from "@/services/ptech";
 
 const error = ref(null);
 const props = defineProps({
-    status: {
+    priority: {
         type: Object,
         default: {}
     }
 });
 
-const emit = defineEmits(['statusDeleted'])
+const emit = defineEmits(['priorityDeleted'])
 
-async function deleteStatus() {
+async function deletePriority() {
     try {
-        await useKanban().status.delete(props.status.uuid);
-        emit("statusDeleted", props.status);
+        await useKanban().priority.delete(props.priority.uuid);
+        emit("priorityDeleted", props.priority);
     } catch (e) {
         error.value = e;
     }
@@ -26,10 +26,10 @@ async function deleteStatus() {
 
 </script>
 <template>
-    <popup-modal confirm-scheme="red" @confirm="deleteStatus">
+    <popup-modal confirm-scheme="red" @confirm="deletePriority">
         <icon-exclamation-circle class="w-14 h-14 mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200"></icon-exclamation-circle>
 
-        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Do you want to delete this status?</h3>
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Do you want to delete this priority?</h3>
 
         <danger-alert v-if="error">{{error}}</danger-alert>
     </popup-modal>
