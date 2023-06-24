@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Bundles\Kanban;
 
+use Bundles\Kanban\Models\Priority;
 use Bundles\Kanban\Models\Project;
 use Bundles\Kanban\Models\Status;
+use Bundles\Kanban\Policies\PriorityPolicy;
 use Bundles\Kanban\Policies\ProjectPolicy;
 use Bundles\Kanban\Policies\StatusPolicy;
 use Illuminate\Support\Facades\Gate;
@@ -24,6 +26,7 @@ class ServiceProvider extends BaseServiceProvider
 
         Gate::policy(Project::class, ProjectPolicy::class);
         Gate::policy(Status::class, StatusPolicy::class);
+        Gate::policy(Priority::class, PriorityPolicy::class);
 
         Route::middleware('api')
             ->prefix('api')

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Bundles\Kanban\Http\Actions\Statuses\Update;
 
 use Bundles\Kanban\Http\Controller;
-use Bundles\Kanban\Repositories\StatusRepository;
+use Bundles\Kanban\Repositories\PriorityRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class Action extends Controller
@@ -15,14 +15,14 @@ class Action extends Controller
     public function __invoke(
         string                $uuid,
         UpdatePriorityRequest $request,
-        StatusRepository      $statusRepository
+        PriorityRepository    $priorityRepository
     )
     {
-        $status = $statusRepository->getByUuidOrFail($uuid);
-        $this->authorize('view', $status);
+        $priority = $priorityRepository->getByUuidOrFail($uuid);
+        $this->authorize('view', $priority);
 
-        $status->fill($request->validated());
-        $statusRepository->persist($status);
+        $priority->fill($request->validated());
+        $priorityRepository->persist($priority);
         return response()->noContent();
     }
 }

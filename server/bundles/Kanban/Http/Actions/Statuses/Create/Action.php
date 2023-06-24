@@ -22,7 +22,7 @@ class Action extends ProjectAction
 
         $priority = $status->priority;
         if (empty($priority)) {
-            $status->priority = $statusRepository->getMaxPriorityByProject($project);
+            $status->priority = $statusRepository->getMaxPriorityByProject($project) + 1;
         }
         $status->uuid = Str::uuid();
 

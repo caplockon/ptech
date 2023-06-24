@@ -97,7 +97,7 @@ class StatusRepository extends Repository
 
     public function getMaxPriorityByProject(Project $project)
     {
-        return 1 + (int) Status::query()
+        return (int) Status::query()
                 ->where('project_id', $project->id)
                 ->max('priority');
     }
