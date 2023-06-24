@@ -7,13 +7,20 @@ import PageTitle from "@/components/partials/PageTitle.vue";
 import ProjectGeneralInformation from "@/modules/kanban/partials/ProjectGeneralInformation.vue";
 import ProjectStatusList from "@/modules/kanban/partials/ProjectStatusList.vue";
 import ProjectPriorityList from "@/modules/kanban/partials/ProjectPriorityList.vue";
+import {useToast} from "@/stores/toast";
 
 const route = useRoute();
 const project = ref({});
+const toast = useToast();
 
 onMounted(() => {
     useKanban().project.get(route.params.uuid).then(data => project.value = data);
 });
+
+function onProjectUpdated(updated) {
+    Object.assign(project, updated)
+    toast.pushSuccess("Project has been updated successfully")
+}
 
 </script>
 <template>
@@ -27,7 +34,7 @@ onMounted(() => {
 
                 <project-general-information
                     :project="project"
-                    @project-updated="(updated) => Object.assign(project, updated)"
+                    @project-updated="onProjectUpdated"
                 />
 
             </div>

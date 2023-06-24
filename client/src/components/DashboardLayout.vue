@@ -2,6 +2,7 @@
 import DashboardNavbar from "@/components/partials/DashboardNavbar.vue";
 import DashboardSidebar from "@/components/partials/DashboardSidebar.vue";
 import DashboardFooter from "@/components/partials/DashboardFooter.vue";
+import ToastNotification from "@/components/toasts/ToastNotification.vue";
 
 const props = defineProps({
     footer: {
@@ -32,4 +33,5 @@ const props = defineProps({
 
     <slot name="ending"></slot>
 
+    <toast-notification/>
 </template>

@@ -9,7 +9,9 @@ import IconTrash from "@/components/icons/IconTrash.vue";
 import PrimaryButton from "@/components/buttons/PrimaryButton.vue";
 import {useKanban} from "@/services/ptech";
 import IconPlus from "@/components/icons/IconPlus.vue";
+import {useToast} from "@/stores/toast";
 
+const toast = useToast();
 const props = defineProps({
     project: {
         type: Object,
@@ -64,8 +66,9 @@ function moveDown(priority, key) {
 async function savePriorities() {
     try {
         await useKanban().project.updatePriorities(props.project.uuid, priorities.value);
+        toast.pushSuccess("The list of priorities has been updated successfully");
     } catch (e) {
-        console.log(e)
+        toast.pushError(e)
     }
 }
 
