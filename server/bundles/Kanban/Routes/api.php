@@ -2,6 +2,7 @@
 
 use App\Http\RouteRegex;
 use Bundles\Kanban\Http\Actions\Projects as ProjectActions;
+use Bundles\Kanban\Http\Actions\Statuses as StatusActions;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:api', 'prefix' => 'kanban'], function () {
@@ -49,6 +50,21 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'kanban'], function () {
     Route::put(
         '/projects/{uuid}/priorities',
         ProjectActions\UpdatePriorities\Action::class
+    )->where(['uuid' => RouteRegex::UUID]);
+
+    Route::post(
+        '/statuses',
+        StatusActions\Create\Action::class
+    );
+
+    Route::delete(
+        '/statuses/{uuid}',
+        StatusActions\Delete\Action::class
+    )->where(['uuid' => RouteRegex::UUID]);
+
+    Route::patch(
+        '/statuses/{uuid}',
+        StatusActions\Update\Action::class
     )->where(['uuid' => RouteRegex::UUID]);
 });
 
