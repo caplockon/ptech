@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('creator_id');
             $table->integer('assignee_id')->nullable();
             $table->integer('priority_id');
+            $table->integer('status_id');
             $table->timestamps();
             $table->softDeletes();
 

@@ -16,6 +16,11 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'kanban'], function () {
     Route::get(
         '/projects/{uuid}',
         ProjectActions\Details\Action::class
+    )->where(['uuid' => RouteRegex::UUID]);
+
+    Route::get(
+        '/board/{code}',
+        ProjectActions\Board\Action::class
     );
 
     Route::post(
