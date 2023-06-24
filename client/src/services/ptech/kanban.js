@@ -13,6 +13,11 @@ export default function (http) {
             .then(res => res.data.data, e => throwError(e))
     };
 
+    project.board = function (code) {
+        return http.get(`/api/kanban/board/${code}`)
+            .then(res => res.data.data, e => throwError(e))
+    };
+
     project.create = function (data) {
         return http.post('/api/kanban/projects', data)
             .then(res => res.data.data, (e) => {throw error(e).getValidationErrors()})

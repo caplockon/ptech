@@ -3,10 +3,19 @@ import DashboardLayout from "@/components/DashboardLayout.vue";
 import TaskGroup from "@/modules/kanban/partials/TaskGroup.vue";
 import {computed, defineComponent, onMounted, ref} from "vue";
 import draggable from "vuedraggable";
+import {useKanban} from "@/services/ptech";
+import {useRoute} from "vue-router";
 
 const tasks = ref([]);
+const kanban = useKanban();
+const route = useRoute();
+
+const project = ref({});
 
 onMounted(() => {
+
+    kanban.project.board(route.params.code).then(res => project.value = res);
+
     tasks.value = [
         {
             uuid: '1',
@@ -67,48 +76,46 @@ onMounted(() => {
     ]
 });
 
-const groups = computed(() => {
+const statusGroups = computed(() => {
+    return project.value.statuses || [];
+});
 
-    const groupPriorities = {
-        'To DO': 1,
-        'In Progress': 2,
-        'Done': 3,
-    };
+const taskGroups = computed(() => {
+    const result = [];
 
-    const results = [];
-    const positions = {};
+    for (let i = 0; i < project.value.tasks.length; i++) {
+        let task = project.value.tasks[i];
+        let groupId = task.status.uuid ?? null;
 
-    for (let i = 0; i < tasks.value.length; i++) {
-        let task = tasks.value[i];
-        let pos;
-
-        if (!positions.hasOwnProperty(task.status)) {
-            results.push({
-                tasks: [],
-                name: task.status
-            });
-            positions[task.status] = pos = results.length - 1;
-        } else {
-            pos = positions[task.status];
+        if (! groupId) {
+            continue;
         }
 
-        results[pos].tasks.push(task);
+
+        let pos = result.findIndex(g => g.id === groupId)
+
+        if (pos >= 0) {
+            result[pos].tasks.push(task);
+        } else {
+            result.push({id: groupId, tasks: [task]});
+        }
     }
 
-    results.sort((a, b) => {
-        return groupPriorities[a.name] - groupPriorities[b.name];
-    });
-
-    return results;
+    return result;
 });
+
+function getTaskInGroup(taskGroups, groupId) {
+    let pos = taskGroups.findIndex(g => g.id === groupId)
+    return pos >= 0 ? taskGroups[pos].tasks : [];
+}
 
 defineComponent(draggable)
 </script>
 <template>
     <dashboard-layout>
-        <draggable v-model="groups" class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
+        <draggable v-model="statusGroups" class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4 dark:bg-gray-900">
             <template #item="{element}">
-                <task-group class="col-span-1" :name="element.name" :tasks="element.tasks"/>
+                <task-group class="col-span-1" :name="element.status" :tasks="getTaskInGroup(taskGroups, element.uuid)"/>
             </template>
         </draggable>
     </dashboard-layout>

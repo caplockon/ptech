@@ -8,7 +8,7 @@ export default {
             meta: {requiresAuth: true}
         },
         {
-            path: '/kanban/project/pro-1',
+            path: '/kanban/board/:code',
             name: 'kanban.project.board',
             component: () => import('./views/ProjectKanboardView.vue'),
             meta: {requiresAuth: true}
