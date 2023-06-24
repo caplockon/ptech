@@ -95,10 +95,10 @@ class PriorityRepository extends Repository
         });
     }
 
-    public function getMaxOrderByProject($projectId)
+    public function getMaxOrderByProject(Project $project)
     {
         return (int) Priority::query()
-            ->where('project_id', $projectId)
+            ->where('project_id', $project->id)
             ->max('order');
     }
 }

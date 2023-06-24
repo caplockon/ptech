@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+namespace Bundles\Kanban\Http\Actions\Priorities\Create;
 
 use Bundles\Kanban\Http\Actions\Projects\ProjectAction;
 use Bundles\Kanban\Http\Resources\PriorityResource;

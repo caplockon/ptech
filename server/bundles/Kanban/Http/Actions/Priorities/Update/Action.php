@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Bundles\Kanban\Http\Actions\Statuses\Update;
+namespace Bundles\Kanban\Http\Actions\Priorities\Update;
 
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Repositories\PriorityRepository;

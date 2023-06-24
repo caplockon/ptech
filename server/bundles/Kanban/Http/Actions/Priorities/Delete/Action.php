@@ -1,11 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Delete;
+namespace Bundles\Kanban\Http\Actions\Priorities\Delete;
 
 use Bundles\Kanban\Http\Controller;
 use Bundles\Kanban\Repositories\PriorityRepository;
-use Bundles\Kanban\Repositories\StatusRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class Action extends Controller
